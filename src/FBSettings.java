@@ -13,6 +13,7 @@ public class FBSettings extends JFrame {
 
     private FlightBook ctr = null;
     private JPanel panel = null;
+    private JComboBox userselection = null;
 
     public FBSettings( FlightBook controller ) {
         ctr = controller;
@@ -29,9 +30,19 @@ public class FBSettings extends JFrame {
 
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(FBSettings.WIDTH, FBSettings.HEIGHT));
+
+        userselection = new JComboBox();
+        userselection.setEditable(true);
+        for( String s : ctr.getUsers() ) {
+            userselection.addItem( s );
+        }
+        userselection.addActionListener(ctr);
+        userselection.setName( FlightBook.USERSELECTION );
+        panel.add( userselection );
+
         this.add(panel);
         pack();
-        setTitle( FlightBook.SETTINGS );
+        setTitle(FlightBook.SETTINGS);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
     }
