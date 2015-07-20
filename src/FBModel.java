@@ -65,6 +65,8 @@ public class FBModel {
                     System.exit(0);
                 }
 
+                books = new ArrayList<Book>();
+                books.add( new Book(s, "FB_1", "same path") );
                 bw.write("FB_1");
                 bw.newLine();
                 bw.write("Name: " + s);
@@ -104,6 +106,7 @@ public class FBModel {
 
                 s = (String) jcb.getSelectedItem();
 
+                books.get(0).setPath(s);
                 bw.write("Path: " + s);
                 bw.newLine();
 
@@ -116,30 +119,52 @@ public class FBModel {
                 e.printStackTrace();
             }
         }else{
+            BufferedReader br = null;
             try {
-                BufferedReader br = new BufferedReader(new FileReader(file));
+                br = new BufferedReader(new FileReader(file));
                 String t="";
-                if((t=br.readLine()).equalsIgnoreCase(FBText.DEUTSCH)) ctr.setLang(FBText.DEUTSCH);
+                if((t=br.readLine().split(" ")[1]).equalsIgnoreCase(FBText.DEUTSCH)) ctr.setLang(FBText.DEUTSCH);
                 else if(t.equalsIgnoreCase(FBText.ENGLISH)) ctr.setLang(FBText.ENGLISH);
                 books = new ArrayList<Book>();
                 while( (t=br.readLine())!=null ) {
                     String book=t;
                     t=br.readLine();
                     String name = t.split(" ")[0];
-                    if (name.equalsIgnoreCase("Name:")) name=t.split(" ")[1];
+                    if (name.equalsIgnoreCase("Name:")){
+                        name="";
+                        for(int i=1; i<t.split(" ").length; i++) name+=t.split(" ")[i]+((i+1<t.split(" ").length)?" ":"");
+                    }
                     t=br.readLine();
                     String path = t.split(" ")[0];
-                    if( path.equalsIgnoreCase("Path:")) path = t.split(" ")[1];
+                    if( path.equalsIgnoreCase("Path:")){
+                        path="";
+                        for(int i=1; i<t.split(" ").length; i++) path+=t.split(" ")[i]+((i+1<t.split(" ").length)?" ":"");
+                    }
                     books.add( new Book(name, book, path));
-
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(ctr.getView(),
+                        ctr.textHandler().settingsCorrupt());
+                try {
+                    br.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                file.delete();
+                fb.delete();
+                System.exit(0);
             }
 
         }
 
+    }
+
+    public List<Book> getBooks() {
+        return books;
     }
 }

@@ -92,6 +92,24 @@ public class FBText {
         return null;
     }
 
+    public String settingsCorrupt() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Die Datei settings.cfg ist fehlerhaft und kann nicht gelesen werden!";
+        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+            return "The file settings.cfg is corrupted and cannot be read!";
+        }
+        return null;
+    }
+
+    public String userselection_label() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Flugbuch Auswahl:";
+        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+            return "Flightbook Selection:";
+        }
+        return null;
+    }
+
     public String text() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "";

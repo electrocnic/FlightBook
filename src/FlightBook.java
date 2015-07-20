@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Andreas on 18.07.2015.
@@ -51,12 +52,22 @@ public class FlightBook implements ActionListener{
     }
 
     /**
-     * Returns the users from the model.
+     * Returns the books from the model.
      * @return users.
      */
-    public ArrayList<String> getUsers() {
-        ArrayList<String> users = new ArrayList<String>();
+    public List<Book> getBooks() {
+        return model.getBooks();
+    }
 
+    /**
+     * Returns the username of each book in a list.
+     * @return
+     */
+    public List<String> getBookUsers() {
+        List<String> users = new ArrayList<String>();
+        for( Book b : model.getBooks() ) {
+            users.add( b.getName() );
+        }
         return users;
     }
 

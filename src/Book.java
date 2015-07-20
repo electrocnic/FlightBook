@@ -25,5 +25,35 @@ public class Book {
         this(name, book, path, null);
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBook() {
+        return book;
+    }
+
+    public void setBook(String book) {
+        this.book = book;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public List<Flight> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(List<Flight> entries) {
+        this.entries = entries;
+    }
 }

@@ -30,10 +30,17 @@ public class FBSettings extends JFrame {
 
         panel = new JPanel();
         panel.setPreferredSize(new Dimension(FBSettings.WIDTH, FBSettings.HEIGHT));
+        //panel.setLayout( new GridLayout(3,2) );
+
+        //TODO: Settings User Interface to finish  Springlayout? See zettel...
+        //TODO: Reload files and language after apply in settings...
+
+        JLabel userselection_label = new JLabel( ctr.textHandler().userselection_label());
+        panel.add( userselection_label );
 
         userselection = new JComboBox();
         userselection.setEditable(true);
-        for( String s : ctr.getUsers() ) {
+        for( String s : ctr.getBookUsers() ) {
             userselection.addItem( s );
         }
         userselection.addActionListener(ctr);
