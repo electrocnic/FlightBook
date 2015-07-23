@@ -13,6 +13,7 @@ public class FlightBook implements ActionListener{
     public static final String SETTINGS = "Settings";
     public static final String EDIT = "Edit";
     public static final String USERSELECTION = "UserSelection";
+    public static final String LANGUAGE = "Language";
 
     public static final int VS_DEFAULT = 1;
     public static final int VS_SETTINGS = 2;
@@ -95,6 +96,20 @@ public class FlightBook implements ActionListener{
     public void setLang(String lang) {
         text.setLang(lang);
     }
+
+    /**
+     * Returns the path for the FlightBook (parameter 1).
+     * @param flightBook
+     * @return
+     */
+    public String getPath( String flightBook ) {
+        return model.getPath( flightBook );
+    }
+
+
+
+
+
 
 
     public static void main(String[] args) {

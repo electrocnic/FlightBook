@@ -26,30 +26,27 @@ public class FBText {
             return  "Hallo."+System.lineSeparator()+
                     "Sie benutzen FlightBook anscheinend das erste Mal?"+System.lineSeparator()+
                     "Als erstes, tragen Sie bitte ihren Namen ein (Vorname Nachname):";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else {
             return "Hello."+System.lineSeparator()+
                     "It seems You are using FlightBook for your first time?"+System.lineSeparator()+
                     "If so, please enter your full name at first:";
         }
-        return null;
     }
 
     public String newFlightBook() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Neues Flugbuch anlegen";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else {
             return "Create New FlightBook";
         }
-        return null;
     }
 
     public String samePath() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "selbes Verzeichnis";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else {
             return "same Path";
         }
-        return null;
     }
 
     public String choosePath() {
@@ -60,7 +57,7 @@ public class FBText {
                     +System.lineSeparator()+
                     "Selbes Verzeichnis bedeutet, dass diese Dateien im selben Verzeichnis wie FlightBook.jar liegen."
                     +System.lineSeparator()+" ";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else{
             return "Please choose the Path, where the igc-Files are stored."
                     +System.lineSeparator()+
                     "They should be sorted by years and months using folders and sub-folders."
@@ -68,16 +65,14 @@ public class FBText {
                     "Same Path means, that the igc-files are located in the same directory as the FlightBook.jar"
                     +System.lineSeparator()+" ";
         }
-        return null;
     }
 
     public String choosePathHeader() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Flugdateien Ablageverzeichnis";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else{
             return "Files Directory";
         }
-        return null;
     }
 
     public String openingHint() {
@@ -85,38 +80,90 @@ public class FBText {
             return "Sie haben Ihr erstes Flugbuch nun angelegt!" + System.lineSeparator() +
                     "Sie k\u00F6nnen sp\u00E4ter unter den Einstellungen jederzeit" + System.lineSeparator() +
                     "weitere Flugb\u00FCcher hinzuf\u00FCgen!";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else{
             return "Your first Flight book has been created!" + System.lineSeparator() +
                     "You can add more books in the settings if needed at any time.";
         }
-        return null;
     }
 
     public String settingsCorrupt() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Die Datei settings.cfg ist fehlerhaft und kann nicht gelesen werden!";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else{
             return "The file settings.cfg is corrupted and cannot be read!";
         }
-        return null;
     }
 
     public String userselection_label() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Flugbuch Auswahl:";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else{
             return "Flightbook Selection:";
         }
-        return null;
+    }
+
+    public String settingsPathLabel() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Suchpfad f\u00FCr Flugdateien:";
+        }else{
+            return "Path for igc-files:";
+        }
+    }
+
+    public String label_language() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Sprache:";
+        }else{
+            return "Language:";
+        }
+    }
+
+    public String label_delete() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Ausgew\u00E4hltes Flugbuch l\u00F6schen";
+        }else{
+            return "Delete this FlightBook";
+        }
+    }
+
+    public String button_apply() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "\u00DCbernehmen";
+        }else{
+            return "Apply";
+        }
+    }
+
+    public String button_cancel() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Abbrechen";
+        }else{
+            return "Cancel";
+        }
+    }
+
+    public String warning() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Achtung!";
+        }else{
+            return "Warning!";
+        }
+    }
+
+    public String label_delete_warning() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Alle (manuellen) Eintr\u00E4ge gehen verloren!!!";
+        }else{
+            return "All (manual) entries are going to be deleted!!!";
+        }
     }
 
     public String text() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "";
-        }else if( lang.equalsIgnoreCase(ENGLISH)) {
+        }else{
             return "";
         }
-        return null;
     }
 
 }

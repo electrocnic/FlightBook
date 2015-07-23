@@ -87,7 +87,7 @@ public class FBModel {
 
                 //Custom button text
                 options = new Object[]{"OK",
-                        "Abbrechen"};
+                        ctr.textHandler().button_cancel()};
                 int n = JOptionPane.showOptionDialog(ctr.getView(),
                         panel,
                         ctr.textHandler().choosePathHeader(),
@@ -167,4 +167,16 @@ public class FBModel {
     public List<Book> getBooks() {
         return books;
     }
+
+    public String getPath( String flightBook ) {
+        for( Book b : books ) {
+            if( b.getName().equalsIgnoreCase( flightBook ) ) {
+                String s = b.getPath();
+                if( s.isEmpty() ) s=ctr.textHandler().samePath();
+                return s;
+            }
+        }
+        return "No path saved";
+    }
+
 }
