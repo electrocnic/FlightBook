@@ -24,6 +24,9 @@ public class FBSettings extends JFrame implements ActionListener {
     private JPanel p2 = null;
     private JPanel p3 = null;
     private JPanel p4 = null;
+    private JPanel p5 = null;
+    private JPanel p6 = null;
+    private JPanel p7 = null;
 
     private JLabel label_selectedFB = null;
     private JLabel label_path = null;
@@ -42,6 +45,8 @@ public class FBSettings extends JFrame implements ActionListener {
     private JButton button_help2 = null;
     private JButton button_apply = null;
     private JButton button_cancel = null;
+
+    private JSeparator separator = null;
 
 
 
@@ -98,10 +103,29 @@ public class FBSettings extends JFrame implements ActionListener {
 
         /** -----+-----++--- Search Path LABEL ---++-----+----- **/
         label_path = new JLabel( ctr.textHandler().settingsPathLabel() );
+        label_path.setPreferredSize(new Dimension(WIDTH - 10, 30));
+        p2 = new JPanel();
+        p2.setLayout(new BorderLayout());
+        p2.add(Box.createRigidArea(new Dimension(5,0)), BorderLayout.WEST);
+        p2.add(label_path, BorderLayout.CENTER);
 
 
         /** -----+-----++--- Search Path Textfield ---++-----+----- **/
         textfield_path = new JTextField( getPath() );
+        textfield_path.setPreferredSize(new Dimension(WIDTH - 10, 35));
+        p3 = new JPanel();
+        p3.setLayout(new BorderLayout());
+        p3.add(Box.createRigidArea(new Dimension(5, 0)), BorderLayout.WEST);
+        p3.add(Box.createRigidArea(new Dimension(5, 0)), BorderLayout.EAST);
+        p3.add(textfield_path, BorderLayout.CENTER);
+
+
+        /** -----+-----++--- Separator ---++-----+----- **/
+        //p4 = new JPanel();
+        //p4.add(Box.createRigidArea(new Dimension(5, 0)), BorderLayout.WEST);
+        //p4.add(Box.createRigidArea(new Dimension(5, 0)), BorderLayout.EAST);
+        //separator = new JSeparator();
+        //p4.add( separator );
 
 
         /** -----+-----++--- Language Panel ---++-----+----- **/
@@ -111,10 +135,9 @@ public class FBSettings extends JFrame implements ActionListener {
         combobox_language.addItem("Deutsch");
         combobox_language.addItem("English");
         combobox_language.setName( FlightBook.LANGUAGE );
-        //combobox_language.addActionListener( this );
-        p2 = new JPanel();
-        p2.add( label_language );
-        p2.add( combobox_language );
+        p5 = new JPanel();
+        p5.add( label_language );
+        p5.add( combobox_language );
 
 
         /** -----+-----++--- Delete Panel ---++-----+----- **/
@@ -128,10 +151,10 @@ public class FBSettings extends JFrame implements ActionListener {
             button_help2.setContentAreaFilled(false);
         }
 
-        p3 = new JPanel();
-        p3.add( label_delete );
-        p3.add( checkbox_delete );
-        p3.add( button_help2 );
+        p6 = new JPanel();
+        p6.add( label_delete );
+        p6.add( checkbox_delete );
+        p6.add( button_help2 );
 
 
         /** -----+-----++--- Apply and Cancel Panel ---++-----+----- **/
@@ -139,18 +162,19 @@ public class FBSettings extends JFrame implements ActionListener {
         button_apply.addActionListener( this );
         button_cancel = new JButton( ctr.textHandler().button_cancel() );
         button_cancel.addActionListener( this );
-        p4 = new JPanel();
-        p4.add(button_apply);
-        p4.add(button_cancel);
+        p7 = new JPanel();
+        p7.add(button_apply);
+        p7.add(button_cancel);
 
 
         /** -----+-----++--- All the Panels ---++-----+----- **/
         panel.add( p1 );
-        panel.add( label_path );
-        panel.add( textfield_path );
         panel.add( p2 );
         panel.add( p3 );
-        panel.add( p4 );
+        //panel.add( p4 );
+        panel.add( p5 );
+        panel.add( p6 );
+        panel.add( p7 );
 
         this.add(panel);
         pack();
@@ -191,9 +215,40 @@ public class FBSettings extends JFrame implements ActionListener {
             }
             if( n==0 ) { //OK
                 //TODO: Read settings.cfg and change what changed and save into file.
-                System.out.println("Settings wurden \u00FCbernommen und ins File gespeichert.");
-                System.out.println("Exit Settings");
-                ctr.setVisibility(FlightBook.VS_DEFAULT);
+                //1.: Neuer Benutzer: Abfragen ob es ihn schon gibt, sonst neu anlegen, dialog bei leerem Verzeichnisfeld.
+                //2.: Benutzer wechseln: Model laut settings.cfg anpassen
+                //3.: Irgendwas ändern: anpassen.
+                //4.: Löschen: Die Einträge aus dem settings.cfg löschen.
+                //5.: Help Buttons
+                String fb = (String) combobox_userselection.getSelectedItem();
+                if (checkbox_delete.isSelected()) { //delete this book
+                    ctr.deleteBook( fb );
+                } else {
+                    boolean exists = false;
+                    for (String s : ctr.getBookUsers()) {
+                        if (s.equalsIgnoreCase(fb)) { //existiert bereits
+                            exists = true;
+                            break;
+                        }
+                    }
+                    if (!exists) { //make new
+                        //TODO: make new, reload settings, cfg anpassen...
+                    } else {
+                        try {
+                            ctr.setSelectedBook(fb);
+                            textfield_path.setText(ctr.getPath(fb));
+                        } catch (BookNotExistsException e1) {
+                            e1.printStackTrace();
+                            JOptionPane.showMessageDialog(this,
+                                    ctr.textHandler().bookNotExists());
+                        }
+                    }
+
+
+                    System.out.println("Settings wurden \u00FCbernommen und ins File gespeichert.");
+                    System.out.println("Exit Settings");
+                    ctr.setVisibility(FlightBook.VS_DEFAULT);
+                }
             }
         }
     }

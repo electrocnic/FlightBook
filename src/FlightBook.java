@@ -106,6 +106,22 @@ public class FlightBook implements ActionListener{
         return model.getPath( flightBook );
     }
 
+    public Book getSelectedBook() {
+        return model.getSelectedBook();
+    }
+
+    public void setSelectedBook( String user ) throws BookNotExistsException {
+        model.setSelectedBook( user );
+    }
+
+    public void setSelectedBook( Book book ) throws BookNotExistsException {
+        model.setSelectedBook( book.getName() );
+    }
+
+    public void deleteBook( String user ) {
+        model.deleteBook( user );
+    }
+
 
 
 

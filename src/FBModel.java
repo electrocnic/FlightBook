@@ -11,6 +11,7 @@ public class FBModel {
 
     private FlightBook ctr = null;
     private List<Book> books = null;
+    private int n_selected = 0;
 
     public FBModel( FlightBook controller ) {
         this.ctr = controller;
@@ -177,6 +178,40 @@ public class FBModel {
             }
         }
         return "No path saved";
+    }
+
+    public Book getSelectedBook() {
+        if( n_selected >= books.size() ) n_selected = 0;
+        return books.get( n_selected );
+    }
+
+    public void setSelectedBook( String user ) throws BookNotExistsException {
+        int n = getIndex( user );
+        if( n != -1 ) {
+            n_selected = n;
+        } else {
+            throw new BookNotExistsException();
+        }
+    }
+
+    public void deleteBook( String user ) {
+        int n = getIndex( user );
+        if( n != -1 ) {
+            books.remove( n );
+            if( books.isEmpty() ) {
+                n_selected = -1;
+            } else n_selected = 0;
+        }
+    }
+
+    private int getIndex( String user ) {
+        int n=0;
+        for( ; n<books.size(); n++ ) {
+            if( books.get(n).getName().equalsIgnoreCase( user )) {
+                return n;
+            }
+        }
+        return -1;
     }
 
 }

@@ -158,6 +158,14 @@ public class FBText {
         }
     }
 
+    public String bookNotExists() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Diese Buch existiert nicht.";
+        }else{
+            return "This book does not exist.";
+        }
+    }
+
     public String text() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "";
