@@ -166,6 +166,24 @@ public class FBText {
         }
     }
 
+    public String noPathTold() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Es wurde kein Pfad angegeben!" + System.lineSeparator() +"Die Einstellungen wurden noch nicht \u00FCbernommen!";
+        }else{
+            return "No path is given yet!" + System.lineSeparator() + "The settings have not been saved yet!";
+        }
+    }
+
+    public String pathNotExists() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Der angegebene Pfad existiert nicht."+System.lineSeparator()
+                    +"Bitte legen Sie den Pfad mithilfe des Explorers manuell an!";
+        }else{
+            return "The given path does not exist yet."+System.lineSeparator()+
+                    "Please create the directory manually via the explorer!";
+        }
+    }
+
     public String text() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "";

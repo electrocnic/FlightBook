@@ -194,6 +194,10 @@ public class FBModel {
         }
     }
 
+    /**
+     * Deletes the Book with equal user names and chooses another book as selected book.
+     * @param user
+     */
     public void deleteBook( String user ) {
         int n = getIndex( user );
         if( n != -1 ) {

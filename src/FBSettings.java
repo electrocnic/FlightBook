@@ -84,7 +84,7 @@ public class FBSettings extends JFrame implements ActionListener {
 
         BufferedImage help1ICON = null;
         try {
-            help1ICON = ImageIO.read(new File("help1"));
+            help1ICON = ImageIO.read( System.class.getResourceAsStream("resources/question_mark_icon.gif"));
         } catch (IOException e) {
             System.out.println("No Image found.");
             e.printStackTrace();
@@ -224,8 +224,10 @@ public class FBSettings extends JFrame implements ActionListener {
                 if (checkbox_delete.isSelected()) { //delete this book
                     ctr.deleteBook( fb );
                 } else {
+                    String newPath="";
+                    String newUser=(String)combobox_userselection.getSelectedItem();
                     boolean exists = false;
-                    for (String s : ctr.getBookUsers()) {
+                    for (String s : ctr.getBookUsers()) { //existiert ausgewählter user bereits, oder wurde er neu eingegeben?
                         if (s.equalsIgnoreCase(fb)) { //existiert bereits
                             exists = true;
                             break;
@@ -233,10 +235,33 @@ public class FBSettings extends JFrame implements ActionListener {
                     }
                     if (!exists) { //make new
                         //TODO: make new, reload settings, cfg anpassen...
-                    } else {
+                        File path = new File( textfield_path.getText() );
+                        if( textfield_path.getText().equalsIgnoreCase("same path") ||
+                                textfield_path.getText().equalsIgnoreCase("same") ||
+                                textfield_path.getText().equalsIgnoreCase("selbes verzeichnis") ||
+                                textfield_path.getText().equalsIgnoreCase("gleich") ||
+                                textfield_path.getText().equalsIgnoreCase("selber Pfad") ||
+                                textfield_path.getText().equalsIgnoreCase("gleicher Pfad") ||
+                                textfield_path.getText().equalsIgnoreCase("gleiches verzeichnis") ) {
+                            newPath = "";
+                        }else if( textfield_path.getText().isEmpty() ) { //Kein pfad angegeben.
+                            JOptionPane.showMessageDialog(this,
+                                    ctr.textHandler().noPathTold());
+                            return;
+                        }else{ //Custom Path angegeben.
+                            if( path.exists() ) {
+                                newPath = textfield_path.getText();
+                            }else {
+                                JOptionPane.showMessageDialog(this,
+                                        ctr.textHandler().pathNotExists());
+                                return;
+                            }
+                        }
+                    } else { //TODO: existiert schon: Änderungen übernehmen. Das was hier steht, muss im actionhandler von der combobox passieren, nicht hier.
                         try {
                             ctr.setSelectedBook(fb);
-                            textfield_path.setText(ctr.getPath(fb));
+                            //textfield_path.setText(ctr.getPath(fb));
+                            newPath = textfield_path.getText();
                         } catch (BookNotExistsException e1) {
                             e1.printStackTrace();
                             JOptionPane.showMessageDialog(this,
@@ -245,10 +270,10 @@ public class FBSettings extends JFrame implements ActionListener {
                     }
 
 
-                    System.out.println("Settings wurden \u00FCbernommen und ins File gespeichert.");
-                    System.out.println("Exit Settings");
-                    ctr.setVisibility(FlightBook.VS_DEFAULT);
                 }
+                System.out.println("Settings wurden \u00FCbernommen und ins File gespeichert.");
+                System.out.println("Exit Settings");
+                ctr.setVisibility(FlightBook.VS_DEFAULT);
             }
         }
     }
