@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,6 +123,41 @@ public class FlightBook implements ActionListener{
         model.deleteBook( user );
     }
 
+    public void addNewBook( String user, String book, String path ) {
+        model.addNewBook(user, book, path);
+    }
+
+    public String getNewBookID() {
+        return "FB_" + (model.getBooks().size()+1);
+    }
+
+    public void applyChanges( String user, String path ) {
+        model.getBook( user ).setPath( path );
+    }
+
+    public void refreshSettingsCFG() {
+        File file = new File("FlightBook"+File.separator+"settings.cfg");
+        try {
+            BufferedWriter wr = new BufferedWriter( new FileWriter( file ));
+            wr.write("Language: " + text.getLang());
+            wr.newLine();
+            wr.write( ""+model.getSelectedIndex() );
+            wr.newLine();
+            for( Book book : model.getBooks() ) {
+                wr.write( ""+book );
+                wr.newLine();
+            }
+            wr.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getSelectedIndex() {
+        return model.getSelectedIndex();
+    }
 
 
 
@@ -141,12 +177,17 @@ public class FlightBook implements ActionListener{
         if( SETTINGS.equalsIgnoreCase(e.getActionCommand()) ) {
             System.out.println("Settings pressed");
             setVisibility( VS_SETTINGS );
-        }else if( e.getActionCommand().equalsIgnoreCase("ComboboxChanged") ) {
+        }else if( e.getActionCommand().equalsIgnoreCase("ComboboxChanged") && settings!=null &&view!=null &&text!=null ) {
             JComboBox temp = (JComboBox) e.getSource();
+            String selected = (String)temp.getSelectedItem();
             if( temp.getName().equalsIgnoreCase( USERSELECTION )) {
                 System.out.println("Userselection action");
-                //TODO: new: add to model, make new file
-                //old: lookup Path.
+                settings.setPath( model.getPath( selected ) );
+            }else if( temp.getName().equalsIgnoreCase( LANGUAGE )) {
+                System.out.println("Language action");
+                text.setLang( selected );
+                settings.refreshLanguage();
+                view.refreshLanguage();
             }
         }
     }

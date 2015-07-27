@@ -56,4 +56,8 @@ public class Book {
     public void setEntries(List<Flight> entries) {
         this.entries = entries;
     }
+
+    public String toString() {
+        return book + System.lineSeparator() + "Name: " + name + System.lineSeparator() + "Path: " + path;
+    }
 }

@@ -14,7 +14,8 @@ public class FBText {
     }
 
     public void setLang(String lang) {
-        this.lang = lang;
+        if( DEUTSCH.equalsIgnoreCase( lang ) || ENGLISH.equalsIgnoreCase( lang )) this.lang = lang;
+        else this.lang = ENGLISH;
     }
 
     public String getLang() {
@@ -181,6 +182,14 @@ public class FBText {
         }else{
             return "The given path does not exist yet."+System.lineSeparator()+
                     "Please create the directory manually via the explorer!";
+        }
+    }
+
+    public String noPathSaved() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Kein Pfad gespeichert";
+        }else{
+            return "No path saved";
         }
     }
 

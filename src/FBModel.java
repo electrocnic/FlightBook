@@ -48,7 +48,8 @@ public class FBModel {
                 else if( s.equalsIgnoreCase(FBText.DEUTSCH)) ctr.setLang( FBText.DEUTSCH );
                 bw.write( "Language: " + s );
                 bw.newLine();
-
+                bw.write( "0" );
+                bw.newLine();
                 //Dialog Popup
                 s = (String) JOptionPane.showInputDialog(
                         ctr.getView(),
@@ -126,6 +127,7 @@ public class FBModel {
                 String t="";
                 if((t=br.readLine().split(" ")[1]).equalsIgnoreCase(FBText.DEUTSCH)) ctr.setLang(FBText.DEUTSCH);
                 else if(t.equalsIgnoreCase(FBText.ENGLISH)) ctr.setLang(FBText.ENGLISH);
+                n_selected = Integer.parseInt(br.readLine());
                 books = new ArrayList<Book>();
                 while( (t=br.readLine())!=null ) {
                     String book=t;
@@ -141,6 +143,7 @@ public class FBModel {
                         path="";
                         for(int i=1; i<t.split(" ").length; i++) path+=t.split(" ")[i]+((i+1<t.split(" ").length)?" ":"");
                     }
+                    if( path.endsWith("\\") ) path = path.substring(0, path.length()-1 );
                     books.add( new Book(name, book, path));
                 }
             } catch (FileNotFoundException e) {
@@ -177,7 +180,7 @@ public class FBModel {
                 return s;
             }
         }
-        return "No path saved";
+        return ctr.textHandler().noPathSaved();
     }
 
     public Book getSelectedBook() {
@@ -192,6 +195,10 @@ public class FBModel {
         } else {
             throw new BookNotExistsException();
         }
+    }
+
+    public int getSelectedIndex() {
+        return n_selected;
     }
 
     /**
@@ -217,5 +224,14 @@ public class FBModel {
         }
         return -1;
     }
+
+    public void addNewBook( String user, String book, String path ) {
+        books.add( new Book(user, book, path));
+    }
+
+    public Book getBook( String user ) {
+        return books.get( getIndex(user) );
+    }
+
 
 }

@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public class FBSettings extends JFrame implements ActionListener {
 
-    public static final int WIDTH = 300;
+    public static final int WIDTH = 310;
     public static final int HEIGHT = 200;
 
     private FlightBook ctr = null;
@@ -81,11 +81,15 @@ public class FBSettings extends JFrame implements ActionListener {
         }
         combobox_userselection.addActionListener(ctr);
         combobox_userselection.setName(FlightBook.USERSELECTION);
+        combobox_userselection.setSelectedIndex( ctr.getSelectedIndex() );
 
         BufferedImage help1ICON = null;
         try {
             help1ICON = ImageIO.read( System.class.getResourceAsStream("resources/question_mark_icon.gif"));
         } catch (IOException e) {
+            System.out.println("No Image found.");
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
             System.out.println("No Image found.");
             e.printStackTrace();
         }
@@ -135,6 +139,8 @@ public class FBSettings extends JFrame implements ActionListener {
         combobox_language.addItem("Deutsch");
         combobox_language.addItem("English");
         combobox_language.setName( FlightBook.LANGUAGE );
+        combobox_language.addActionListener( ctr );
+        if( ctr.getLang().equalsIgnoreCase( FBText.ENGLISH )) combobox_language.setSelectedIndex(1);
         p5 = new JPanel();
         p5.add( label_language );
         p5.add( combobox_language );
@@ -223,6 +229,11 @@ public class FBSettings extends JFrame implements ActionListener {
                 String fb = (String) combobox_userselection.getSelectedItem();
                 if (checkbox_delete.isSelected()) { //delete this book
                     ctr.deleteBook( fb );
+                    combobox_userselection.removeAllItems();
+                    for( Book book : ctr.getBooks()) {
+                        combobox_userselection.addItem( book.getName() );
+                    }
+                    textfield_path.setText( ctr.getPath( (String)combobox_userselection.getSelectedItem()));
                 } else {
                     String newPath="";
                     String newUser=(String)combobox_userselection.getSelectedItem();
@@ -233,48 +244,69 @@ public class FBSettings extends JFrame implements ActionListener {
                             break;
                         }
                     }
-                    if (!exists) { //make new
-                        //TODO: make new, reload settings, cfg anpassen...
-                        File path = new File( textfield_path.getText() );
-                        if( textfield_path.getText().equalsIgnoreCase("same path") ||
-                                textfield_path.getText().equalsIgnoreCase("same") ||
-                                textfield_path.getText().equalsIgnoreCase("selbes verzeichnis") ||
-                                textfield_path.getText().equalsIgnoreCase("gleich") ||
-                                textfield_path.getText().equalsIgnoreCase("selber Pfad") ||
-                                textfield_path.getText().equalsIgnoreCase("gleicher Pfad") ||
-                                textfield_path.getText().equalsIgnoreCase("gleiches verzeichnis") ) {
-                            newPath = "";
-                        }else if( textfield_path.getText().isEmpty() ) { //Kein pfad angegeben.
-                            JOptionPane.showMessageDialog(this,
-                                    ctr.textHandler().noPathTold());
-                            return;
-                        }else{ //Custom Path angegeben.
-                            if( path.exists() ) {
-                                newPath = textfield_path.getText();
-                            }else {
-                                JOptionPane.showMessageDialog(this,
-                                        ctr.textHandler().pathNotExists());
-                                return;
-                            }
-                        }
-                    } else { //TODO: existiert schon: Änderungen übernehmen. Das was hier steht, muss im actionhandler von der combobox passieren, nicht hier.
-                        try {
-                            ctr.setSelectedBook(fb);
-                            //textfield_path.setText(ctr.getPath(fb));
+                    File path = new File( textfield_path.getText() );
+                    if( textfield_path.getText().equalsIgnoreCase("same path") ||
+                            textfield_path.getText().equalsIgnoreCase("same") ||
+                            textfield_path.getText().equalsIgnoreCase("selbes verzeichnis") ||
+                            textfield_path.getText().equalsIgnoreCase("gleich") ||
+                            textfield_path.getText().equalsIgnoreCase("selber Pfad") ||
+                            textfield_path.getText().equalsIgnoreCase("gleicher Pfad") ||
+                            textfield_path.getText().equalsIgnoreCase("gleiches verzeichnis") ) {
+                        newPath = "";
+                    }else if( textfield_path.getText().isEmpty()
+                            || textfield_path.getText().equalsIgnoreCase("no path saved")
+                            || textfield_path.getText().equalsIgnoreCase("kein Pfad gespeichert")) { //Kein pfad angegeben.
+                        JOptionPane.showMessageDialog(this,
+                                ctr.textHandler().noPathTold());
+                        return;
+                    }else{ //Custom Path angegeben.
+                        if( path.exists() ) {
                             newPath = textfield_path.getText();
-                        } catch (BookNotExistsException e1) {
-                            e1.printStackTrace();
+                        }else {
                             JOptionPane.showMessageDialog(this,
-                                    ctr.textHandler().bookNotExists());
+                                    ctr.textHandler().pathNotExists());
+                            return;
                         }
                     }
-
-
+                    if (!exists) { //make new
+                        String book = ctr.getNewBookID();
+                        ctr.addNewBook( newUser, book, newPath );
+                        combobox_userselection.addItem( newUser );
+                    } else { //existiert schon
+                        ctr.applyChanges( newUser, newPath );
+                    }
                 }
                 System.out.println("Settings wurden \u00FCbernommen und ins File gespeichert.");
                 System.out.println("Exit Settings");
+                try {
+                    ctr.setSelectedBook((String) combobox_userselection.getSelectedItem());
+                } catch (BookNotExistsException e1) {
+                    e1.printStackTrace();
+                }
+                ctr.refreshSettingsCFG();
+                repaint();
                 ctr.setVisibility(FlightBook.VS_DEFAULT);
             }
         }
+    }
+
+    public void setPathText( String path ) {
+        textfield_path.setText( path );
+        this.repaint();
+    }
+
+    public void setPath( String path ) {
+        textfield_path.setText(path);
+        this.repaint();
+    }
+
+    public void refreshLanguage() {
+        label_selectedFB.setText( ctr.textHandler().userselection_label() );
+        label_delete.setText( ctr.textHandler().label_delete() );
+        label_language.setText( ctr.textHandler().label_language() );
+        label_path.setText( ctr.textHandler().settingsPathLabel() );
+        button_apply.setText( ctr.textHandler().button_apply());
+        button_cancel.setText( ctr.textHandler().button_cancel());
+        repaint();
     }
 }

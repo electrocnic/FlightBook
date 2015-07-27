@@ -44,4 +44,8 @@ public class FBView extends JFrame {
     }
 
 
+    public void refreshLanguage() {
+        //TODO
+    }
+
 }
