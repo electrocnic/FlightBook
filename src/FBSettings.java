@@ -64,6 +64,11 @@ public class FBSettings extends JFrame implements ActionListener {
                 }
         );
 
+        try {
+            this.setIconImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("resources/paragliding-icon.png")));
+        } catch (IOException|IllegalArgumentException e) {
+            e.printStackTrace();
+        }
 
         /** -----+-----++--- Main Panel Initialization ---++-----+----- **/
         panel = new JPanel();
@@ -222,12 +227,6 @@ public class FBSettings extends JFrame implements ActionListener {
                         options[0]);
             }
             if( n==0 ) { //OK
-                //TODO: Read settings.cfg and change what changed and save into file.
-                //1.: Neuer Benutzer: Abfragen ob es ihn schon gibt, sonst neu anlegen, dialog bei leerem Verzeichnisfeld.
-                //2.: Benutzer wechseln: Model laut settings.cfg anpassen
-                //3.: Irgendwas ändern: anpassen.
-                //4.: Löschen: Die Einträge aus dem settings.cfg löschen.
-                //5.: Help Buttons
                 String fb = (String) combobox_userselection.getSelectedItem();
                 if (checkbox_delete.isSelected()) { //delete this book
                     ctr.deleteBook( fb );

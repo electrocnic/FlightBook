@@ -9,13 +9,13 @@ public class Book {
     private String name = null;
     private String book = null;
     private String path = null;
-    private List<Flight> entries = null;
+    private List<Flight> flights = null;
 
-    public Book(String name, String book, String path, List<Flight> entries) {
+    public Book(String name, String book, String path, List<Flight> flights) {
         this.name=name;
         this.book=book;
-        this.entries=entries;
-        if(entries==null) entries = new ArrayList<Flight>();
+        this.flights = flights;
+        if(flights ==null) flights = new ArrayList<Flight>();
         if( path.equalsIgnoreCase("selbes Verzeichnis") || path.equalsIgnoreCase("same Path")) {
             this.path = "";
         }else this.path = path;
@@ -49,12 +49,21 @@ public class Book {
         this.path = path;
     }
 
-    public List<Flight> getEntries() {
-        return entries;
+    public List<Flight> getFlights() {
+        return flights;
     }
 
-    public void setEntries(List<Flight> entries) {
-        this.entries = entries;
+    public void setFlights(List<Flight> flights) {
+        this.flights = flights;
+    }
+
+    public void addNewFlight( Flight flight ) {
+        if(flights==null) flights = new ArrayList<Flight>();
+        flights.add( flight );
+    }
+
+    public void addNewFlight() {
+
     }
 
     public String toString() {

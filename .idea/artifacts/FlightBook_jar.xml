@@ -5,6 +5,8 @@
       <element id="module-output" name="FlightBook" />
       <element id="directory" name="resources">
         <element id="file-copy" path="$PROJECT_DIR$/resources/question_blue.png" />
+        <element id="file-copy" path="$PROJECT_DIR$/resources/paragliding-icon.png" />
+        <element id="file-copy" path="$PROJECT_DIR$/resources/paragliding-icon2.jpg" />
       </element>
     </root>
   </artifact>

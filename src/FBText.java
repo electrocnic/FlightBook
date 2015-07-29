@@ -210,6 +210,30 @@ public class FBText {
         }
     }
 
+    public String button_manual_entry() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Manueller Flugeintrag";
+        }else{
+            return "Manual Entry";
+        }
+    }
+
+    public String button_view_entries() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Flugbuch ansehen";
+        }else{
+            return "View FlightBook";
+        }
+    }
+
+    public String button_refresh_data() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Refresh";
+        }else{
+            return "Refresh";
+        }
+    }
+
     public String text() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "";

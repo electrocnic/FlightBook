@@ -1,5 +1,8 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * Created by Andreas on 18.07.2015.
@@ -17,6 +20,11 @@ public class FBView extends JFrame {
     public FBView( FlightBook controller ) {
         this.ctr = controller;
         setResizable(true);
+        try {
+            this.setIconImage( ImageIO.read( this.getClass().getClassLoader().getResourceAsStream("resources/paragliding-icon.png") ) );
+        } catch (IOException | IllegalArgumentException e) {
+            e.printStackTrace();
+        }
 
         /** -------+-------++--- Menu Bar ---++-------+------- **/
         menubar = new JMenuBar();
@@ -24,16 +32,15 @@ public class FBView extends JFrame {
         edit.setMnemonic(KeyEvent.VK_E);
 
         settings = new JMenuItem( FlightBook.SETTINGS );
-        settings.setMnemonic( KeyEvent.VK_S );
-        settings.getAccessibleContext().setAccessibleDescription(
-                "Einstellungen: Name, Dateipfad, etc.");
+        settings.setMnemonic(KeyEvent.VK_S);
         settings.addActionListener(ctr);
 
         edit.add(settings);
         menubar.add(edit);
         this.setJMenuBar(menubar);
 
-        this.add(new FBPanel());
+        this.add(new FBPanel( ctr ));
+
 
 
         pack();
