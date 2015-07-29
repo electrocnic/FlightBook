@@ -22,7 +22,7 @@ public class FBText {
         return lang;
     }
 
-    public String greeting() {
+    public String greeting_newFlightBook_text() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return  "Hallo."+System.lineSeparator()+
                     "Sie benutzen FlightBook anscheinend das erste Mal?"+System.lineSeparator()+
@@ -34,7 +34,7 @@ public class FBText {
         }
     }
 
-    public String newFlightBook() {
+    public String greeting_newFlightBook_title() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Neues Flugbuch anlegen";
         }else {
@@ -42,7 +42,7 @@ public class FBText {
         }
     }
 
-    public String samePath() {
+    public String generalPurpose_samePath() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "selbes Verzeichnis";
         }else {
@@ -50,7 +50,7 @@ public class FBText {
         }
     }
 
-    public String choosePath() {
+    public String greeting_choosePath_text() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Bitte geben Sie das Verzeichnis an, in welchem sich die igc-Dateien vom Vario befinden."
                     +System.lineSeparator()+
@@ -68,7 +68,7 @@ public class FBText {
         }
     }
 
-    public String choosePathHeader() {
+    public String greeting_choosePath_title() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Flugdateien Ablageverzeichnis";
         }else{
@@ -76,7 +76,7 @@ public class FBText {
         }
     }
 
-    public String openingHint() {
+    public String greeting_finished_text() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Sie haben Ihr erstes Flugbuch nun angelegt!" + System.lineSeparator() +
                     "Sie k\u00F6nnen sp\u00E4ter unter den Einstellungen jederzeit" + System.lineSeparator() +
@@ -87,7 +87,7 @@ public class FBText {
         }
     }
 
-    public String settingsCorrupt() {
+    public String generalPurpose_settingsCorrupt() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Die Datei settings.cfg ist fehlerhaft und kann nicht gelesen werden!";
         }else{
@@ -95,7 +95,7 @@ public class FBText {
         }
     }
 
-    public String userselection_label() {
+    public String label_userselection() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Flugbuch Auswahl:";
         }else{
@@ -103,7 +103,7 @@ public class FBText {
         }
     }
 
-    public String settingsPathLabel() {
+    public String label_choosePath() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Suchpfad f\u00FCr Flugdateien:";
         }else{
@@ -143,7 +143,7 @@ public class FBText {
         }
     }
 
-    public String warning() {
+    public String generalPurpose_warning() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Achtung!";
         }else{
@@ -159,7 +159,7 @@ public class FBText {
         }
     }
 
-    public String bookNotExists() {
+    public String generalPurpose_bookNotExists() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Diese Buch existiert nicht.";
         }else{
@@ -167,7 +167,7 @@ public class FBText {
         }
     }
 
-    public String noPathTold() {
+    public String generalPurpose_noPathTold() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Es wurde kein Pfad angegeben!" + System.lineSeparator() +"Die Einstellungen wurden noch nicht \u00FCbernommen!";
         }else{
@@ -175,7 +175,7 @@ public class FBText {
         }
     }
 
-    public String pathNotExists() {
+    public String generalPurpose_pathNotExists() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Der angegebene Pfad existiert nicht."+System.lineSeparator()
                     +"Bitte legen Sie den Pfad mithilfe des Explorers manuell an!";
@@ -185,11 +185,28 @@ public class FBText {
         }
     }
 
-    public String noPathSaved() {
+    public String generalPurpose_noPathSaved() {
         if( lang.equalsIgnoreCase(DEUTSCH)) {
             return "Kein Pfad gespeichert";
         }else{
             return "No path saved";
+        }
+    }
+
+    public String button_help1_text() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Wenn Sie ein neues Buch zus\u00E4tzlich anlegen wollen," + System.lineSeparator()
+                    + " geben Sie einfach hier einen neuen Namen ein, der aktuelle Eintrag bleibt erhalten.";
+        }else{
+            return "If you want to add a new Book, just type in a new name, the old one won't be deleted!";
+        }
+    }
+
+    public String button_help2_text() {
+        if( lang.equalsIgnoreCase(DEUTSCH)) {
+            return "Die igc-Dateien werden NICHT gel\u00F6scht! Die manuellen Fl\u00FCge gehen aber verloren!!";
+        }else{
+            return "The igc-Files WON'T be deleted! The manual flight-entries, however, WILL!";
         }
     }
 

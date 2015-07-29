@@ -3,7 +3,9 @@
     <output-path>$PROJECT_DIR$/out/artifacts/FlightBook_jar</output-path>
     <root id="archive" name="FlightBook.jar">
       <element id="module-output" name="FlightBook" />
-      <element id="module-output" name="resources" />
+      <element id="directory" name="resources">
+        <element id="file-copy" path="$PROJECT_DIR$/resources/question_blue.png" />
+      </element>
     </root>
   </artifact>
 </component>

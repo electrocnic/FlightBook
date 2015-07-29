@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 /**
@@ -72,7 +73,7 @@ public class FBSettings extends JFrame implements ActionListener {
 
         /** -----+-----++--- Flight Book Selection Panel ---++-----+----- **/
         p1 = new JPanel();
-        label_selectedFB = new JLabel( ctr.textHandler().userselection_label());
+        label_selectedFB = new JLabel( ctr.textHandler().label_userselection());
 
         combobox_userselection = new JComboBox();
         combobox_userselection.setEditable(true);
@@ -85,7 +86,8 @@ public class FBSettings extends JFrame implements ActionListener {
 
         BufferedImage help1ICON = null;
         try {
-            help1ICON = ImageIO.read( System.class.getResourceAsStream("resources/question_mark_icon.gif"));
+            help1ICON = ImageIO.read( this.getClass().getClassLoader().getResourceAsStream("resources/question_blue.png"));
+            //help1ICON = ImageIO.read( new FileInputStream( "resources/question_blue.png") );
         } catch (IOException e) {
             System.out.println("No Image found.");
             e.printStackTrace();
@@ -94,11 +96,12 @@ public class FBSettings extends JFrame implements ActionListener {
             e.printStackTrace();
         }
         if( help1ICON==null ) button_help1 = new JButton("?");
-        else {
-            button_help1 = new JButton( new ImageIcon(help1ICON) );
-            button_help1.setBorder(BorderFactory.createEmptyBorder());
-            button_help1.setContentAreaFilled(false);
-        }
+        else button_help1 = new JButton( new ImageIcon(help1ICON) );
+        ToolTipManager.sharedInstance().setDismissDelay( 10000 );
+        ToolTipManager.sharedInstance().setInitialDelay( 0 );
+        button_help1.setBorder(BorderFactory.createEmptyBorder());
+        button_help1.setContentAreaFilled(false);
+        button_help1.setToolTipText( ctr.textHandler().button_help1_text() );
 
         p1.add( label_selectedFB );
         p1.add( combobox_userselection );
@@ -106,7 +109,7 @@ public class FBSettings extends JFrame implements ActionListener {
 
 
         /** -----+-----++--- Search Path LABEL ---++-----+----- **/
-        label_path = new JLabel( ctr.textHandler().settingsPathLabel() );
+        label_path = new JLabel( ctr.textHandler().label_choosePath() );
         label_path.setPreferredSize(new Dimension(WIDTH - 10, 30));
         p2 = new JPanel();
         p2.setLayout(new BorderLayout());
@@ -138,7 +141,7 @@ public class FBSettings extends JFrame implements ActionListener {
         combobox_language.setEditable(false);
         combobox_language.addItem("Deutsch");
         combobox_language.addItem("English");
-        combobox_language.setName( FlightBook.LANGUAGE );
+        combobox_language.setName(FlightBook.LANGUAGE);
         combobox_language.addActionListener( ctr );
         if( ctr.getLang().equalsIgnoreCase( FBText.ENGLISH )) combobox_language.setSelectedIndex(1);
         p5 = new JPanel();
@@ -151,11 +154,10 @@ public class FBSettings extends JFrame implements ActionListener {
         checkbox_delete = new JCheckBox();
 
         if( help1ICON==null ) button_help2 = new JButton("?");
-        else {
-            button_help2 = new JButton( new ImageIcon(help1ICON) );
-            button_help2.setBorder(BorderFactory.createEmptyBorder());
-            button_help2.setContentAreaFilled(false);
-        }
+        else button_help2 = new JButton( new ImageIcon(help1ICON) );
+        button_help2.setBorder(BorderFactory.createEmptyBorder());
+        button_help2.setContentAreaFilled(false);
+        button_help2.setToolTipText(ctr.textHandler().button_help2_text());
 
         p6 = new JPanel();
         p6.add( label_delete );
@@ -212,7 +214,7 @@ public class FBSettings extends JFrame implements ActionListener {
                 label_delete_warning = new JLabel( ctr.textHandler().label_delete_warning() );
                 n = JOptionPane.showOptionDialog(this,
                         label_delete_warning,
-                        ctr.textHandler().warning(),
+                        ctr.textHandler().generalPurpose_warning(),
                         JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.WARNING_MESSAGE,
                         null,
@@ -257,14 +259,14 @@ public class FBSettings extends JFrame implements ActionListener {
                             || textfield_path.getText().equalsIgnoreCase("no path saved")
                             || textfield_path.getText().equalsIgnoreCase("kein Pfad gespeichert")) { //Kein pfad angegeben.
                         JOptionPane.showMessageDialog(this,
-                                ctr.textHandler().noPathTold());
+                                ctr.textHandler().generalPurpose_noPathTold());
                         return;
                     }else{ //Custom Path angegeben.
                         if( path.exists() ) {
                             newPath = textfield_path.getText();
                         }else {
                             JOptionPane.showMessageDialog(this,
-                                    ctr.textHandler().pathNotExists());
+                                    ctr.textHandler().generalPurpose_pathNotExists());
                             return;
                         }
                     }
@@ -301,12 +303,14 @@ public class FBSettings extends JFrame implements ActionListener {
     }
 
     public void refreshLanguage() {
-        label_selectedFB.setText( ctr.textHandler().userselection_label() );
+        label_selectedFB.setText( ctr.textHandler().label_userselection() );
         label_delete.setText( ctr.textHandler().label_delete() );
         label_language.setText( ctr.textHandler().label_language() );
-        label_path.setText( ctr.textHandler().settingsPathLabel() );
+        label_path.setText( ctr.textHandler().label_choosePath() );
         button_apply.setText( ctr.textHandler().button_apply());
         button_cancel.setText( ctr.textHandler().button_cancel());
+        button_help1.setToolTipText(ctr.textHandler().button_help1_text());
+        button_help2.setToolTipText(ctr.textHandler().button_help2_text());
         repaint();
     }
 }

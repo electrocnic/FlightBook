@@ -53,8 +53,8 @@ public class FBModel {
                 //Dialog Popup
                 s = (String) JOptionPane.showInputDialog(
                         ctr.getView(),
-                        ctr.textHandler().greeting(),
-                        ctr.textHandler().newFlightBook(),
+                        ctr.textHandler().greeting_newFlightBook_text(),
+                        ctr.textHandler().greeting_newFlightBook_title(),
                         JOptionPane.PLAIN_MESSAGE,
                         null,
                         null,
@@ -74,14 +74,14 @@ public class FBModel {
                 bw.write("Name: " + s);
                 bw.newLine();
 
-                String[] list = {ctr.textHandler().samePath()};
+                String[] list = {ctr.textHandler().generalPurpose_samePath()};
                 JComboBox jcb = new JComboBox(list);
                 jcb.setEditable(true);
                 jcb.setPreferredSize(new Dimension(600,25));
                 JPanel panel = new JPanel();
                 JPanel panel2 = new JPanel();
                 panel.setLayout( new GridLayout(2,1));
-                JLabel label = new JLabel("<html>" + ctr.textHandler().choosePath().replaceAll(System.lineSeparator(),"<br>") + "</html>");
+                JLabel label = new JLabel("<html>" + ctr.textHandler().greeting_choosePath_text().replaceAll(System.lineSeparator(),"<br>") + "</html>");
                 panel.add(label);
                 panel2.add(jcb);
                 panel.add(panel2);
@@ -92,7 +92,7 @@ public class FBModel {
                         ctr.textHandler().button_cancel()};
                 int n = JOptionPane.showOptionDialog(ctr.getView(),
                         panel,
-                        ctr.textHandler().choosePathHeader(),
+                        ctr.textHandler().greeting_choosePath_title(),
                         JOptionPane.YES_NO_CANCEL_OPTION,
                         JOptionPane.QUESTION_MESSAGE,
                         null,
@@ -113,7 +113,7 @@ public class FBModel {
                 bw.newLine();
 
                 JOptionPane.showMessageDialog(ctr.getView(),
-                        ctr.textHandler().openingHint());
+                        ctr.textHandler().greeting_finished_text());
 
                 bw.close();
 
@@ -153,7 +153,7 @@ public class FBModel {
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(ctr.getView(),
-                        ctr.textHandler().settingsCorrupt());
+                        ctr.textHandler().generalPurpose_settingsCorrupt());
                 try {
                     br.close();
                 } catch (IOException e1) {
@@ -176,11 +176,11 @@ public class FBModel {
         for( Book b : books ) {
             if( b.getName().equalsIgnoreCase( flightBook ) ) {
                 String s = b.getPath();
-                if( s.isEmpty() ) s=ctr.textHandler().samePath();
+                if( s.isEmpty() ) s=ctr.textHandler().generalPurpose_samePath();
                 return s;
             }
         }
-        return ctr.textHandler().noPathSaved();
+        return ctr.textHandler().generalPurpose_noPathSaved();
     }
 
     public Book getSelectedBook() {
